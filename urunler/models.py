@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.safestring import mark_safe
 
 class Urun(models.Model):
 
@@ -12,4 +13,8 @@ class Urun(models.Model):
     urun_adi = models.CharField(max_length=150)
     urun_yabanci_adi = models.CharField(max_length=150)
     kdv = models.FloatField(choices=Kdv.choices)
+    urun_resmi = models.ImageField(upload_to='urunler', blank=True, null=True)
 
+    def urun_thumb(self):
+        return mark_safe('<img src="%s" width="150" height="150" />' % (
+            self.urun_resmi.url)) 
